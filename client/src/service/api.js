@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const URL = process.env.REACT_APP_BASE_URL || "http://localhost:8000";   // ✅ Backend URL
+const URL = process.env.REACT_APP_BASE_URL || "https://ecommerce-mern-uh3u.onrender.com";   // ✅ Backend URL
 
 export const authenticateSignup = async (userData) => {
     try {
