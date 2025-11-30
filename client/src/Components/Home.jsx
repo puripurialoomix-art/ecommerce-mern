@@ -79,7 +79,7 @@ const Home = () => {
                         </Typography>
                     </Grid>
                     {products && products.map(product => (
-                        <Grid item xs={12} sm={6} md={6} lg={6} key={product.id}>
+                        <Grid item xs={6} sm={6} md={6} lg={6} key={product.id}>
                             <ProductBox to={`/product/${product.id}`}>
                                 <ProductImage src={product.url} alt={product.title.shortTitle} />
                                 <ProductTitle>{product.title.shortTitle}</ProductTitle>
