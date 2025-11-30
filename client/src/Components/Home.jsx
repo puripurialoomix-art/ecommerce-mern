@@ -25,23 +25,28 @@ const ProductBox = styled(Link)`
     text-decoration: none;
     color: inherit;
     display: block;
-    padding: 15px;
-    border: 1px solid #f0f0f0;
-    border-radius: 4px;
+    background: #fff;
+    text-align: center;
+    padding: 20px 10px;
     transition: all 0.3s;
     &:hover {
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        transform: translateY(-2px);
     }
 `;
 
 const ProductImage = styled('img')`
-    width: 100%;
-    height: 200px;
+    width: auto;
+    height: 150px;
     object-fit: contain;
+    margin: 0 auto;
+    display: block;
 `;
 
 const ProductTitle = styled(Typography)`
     font-size: 14px;
+    font-weight: 600;
+    color: #212121;
     margin-top: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -49,9 +54,23 @@ const ProductTitle = styled(Typography)`
 `;
 
 const ProductPrice = styled(Typography)`
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 600;
+    color: #212121;
     margin-top: 5px;
+`;
+
+const ProductDiscount = styled(Typography)`
+    font-size: 12px;
+    color: green;
+    margin-top: 2px;
+`;
+
+const ProductTagline = styled(Typography)`
+    font-size: 12px;
+    color: #212121;
+    opacity: 0.6;
+    margin-top: 2px;
 `;
 
 const Home = () => {
@@ -83,10 +102,8 @@ const Home = () => {
                             <ProductBox to={`/product/${product.id}`}>
                                 <ProductImage src={product.url} alt={product.title.shortTitle} />
                                 <ProductTitle>{product.title.shortTitle}</ProductTitle>
-                                <ProductPrice>₹{product.price.cost}</ProductPrice>
-                                <Typography sx={{ fontSize: 12, color: 'green' }}>
-                                    {product.discount}
-                                </Typography>
+                                <ProductDiscount>{product.discount}</ProductDiscount>
+                                <ProductTagline>{product.tagline}</ProductTagline>
                             </ProductBox>
                         </Grid>
                     ))}
