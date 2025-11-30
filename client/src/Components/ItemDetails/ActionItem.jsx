@@ -38,12 +38,8 @@ const ActionItem = ({ product }) => {
     }
 
     const buyNow = () => {
-        const upiId = "rahulchyy1999-3@okaxis";  
-        const name = "Rahul Store";
-        const amount = product.price.cost;
-
-        const upiLink = `upi://pay?pa=${upiId}&pn=${name}&am=${amount}&cu=INR`;
-        window.location.href = upiLink;
+        dispatch(addToCart(id, quantity));
+        navigate('/checkout');
     }
 
     return (
