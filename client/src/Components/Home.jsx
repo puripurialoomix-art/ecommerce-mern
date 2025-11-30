@@ -1,7 +1,8 @@
 import React,  { useEffect } from 'react';
 
-import { Box, styled, Grid, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Box, styled, Grid, Typography, Button } from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
+import { ShoppingCart as Cart, FlashOn as Flash } from '@mui/icons-material';
 
 import NavBar from './Home/NarBar';
 import Banner from './Home/Banner';
@@ -9,6 +10,7 @@ import MidSlide from './Home/MidSlide';
 
 import { useSelector, useDispatch } from 'react-redux'; // hooks
 import { getProducts as listProducts } from '../redux/actions/productActions';
+import { addToCart } from '../redux/actions/cartActions';
 
 const Component = styled(Box)`
     padding: 20px 10px;
@@ -21,18 +23,22 @@ const ProductGrid = styled(Grid)`
     padding: 20px;
 `;
 
-const ProductBox = styled(Link)`
-    text-decoration: none;
-    color: inherit;
-    display: block;
+const ProductBox = styled(Box)`
     background: #fff;
-    text-align: center;
-    padding: 20px 10px;
+    padding: 15px;
     transition: all 0.3s;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
     &:hover {
         box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-        transform: translateY(-2px);
     }
+`;
+
+const ProductImageLink = styled(Link)`
+    text-decoration: none;
+    display: block;
+    text-align: center;
 `;
 
 const ProductImage = styled('img')`
@@ -45,32 +51,55 @@ const ProductImage = styled('img')`
 
 const ProductTitle = styled(Typography)`
     font-size: 14px;
-    font-weight: 600;
     color: #212121;
     margin-top: 10px;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    min-height: 40px;
+`;
+
+const PriceContainer = styled(Box)`
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
 `;
 
 const ProductPrice = styled(Typography)`
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 600;
     color: #212121;
-    margin-top: 5px;
+`;
+
+const OriginalPrice = styled(Typography)`
+    font-size: 14px;
+    color: #878787;
+    text-decoration: line-through;
 `;
 
 const ProductDiscount = styled(Typography)`
-    font-size: 12px;
-    color: green;
-    margin-top: 2px;
+    font-size: 14px;
+    color: #388e3c;
+    font-weight: 500;
 `;
 
-const ProductTagline = styled(Typography)`
-    font-size: 12px;
-    color: #212121;
-    opacity: 0.6;
-    margin-top: 2px;
+const ButtonContainer = styled(Box)`
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    padding-top: 15px;
+`;
+
+const StyledButton = styled(Button)`
+    flex: 1;
+    border-radius: 2px;
+    height: 40px;
+    font-size: 13px;
+    text-transform: none;
+    font-weight: 500;
 `;
 
 const Home = () => {
@@ -78,10 +107,21 @@ const Home = () => {
     const { products, error } = getProducts;
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(listProducts())
     }, [dispatch])
+
+    const handleAddToCart = (id) => {
+        dispatch(addToCart(id, 1));
+        navigate('/cart');
+    };
+
+    const handleBuyNow = (id) => {
+        dispatch(addToCart(id, 1));
+        navigate('/checkout');
+    };
 
     return (
         <>
@@ -99,11 +139,39 @@ const Home = () => {
                     </Grid>
                     {products && products.map(product => (
                         <Grid item xs={6} sm={6} md={6} lg={6} key={product.id}>
-                            <ProductBox to={`/product/${product.id}`}>
-                                <ProductImage src={product.url} alt={product.title.shortTitle} />
-                                <ProductTitle>{product.title.shortTitle}</ProductTitle>
-                                <ProductDiscount>{product.discount}</ProductDiscount>
-                                <ProductTagline>{product.tagline}</ProductTagline>
+                            <ProductBox>
+                                <ProductImageLink to={`/product/${product.id}`}>
+                                    <ProductImage src={product.url} alt={product.title.shortTitle} />
+                                </ProductImageLink>
+                                
+                                <Link to={`/product/${product.id}`} style={{ textDecoration: 'none' }}>
+                                    <ProductTitle>{product.title.shortTitle}</ProductTitle>
+                                </Link>
+                                
+                                <PriceContainer>
+                                    <ProductPrice>₹{product.price.cost}</ProductPrice>
+                                    <OriginalPrice>₹{product.price.mrp}</OriginalPrice>
+                                    <ProductDiscount>{product.discount}</ProductDiscount>
+                                </PriceContainer>
+
+                                <ButtonContainer>
+                                    <StyledButton 
+                                        onClick={() => handleAddToCart(product.id)}
+                                        variant="contained"
+                                        sx={{ background: '#ff9f00', '&:hover': { background: '#e68a00' } }}
+                                        startIcon={<Cart />}
+                                    >
+                                        Add to Cart
+                                    </StyledButton>
+                                    <StyledButton 
+                                        onClick={() => handleBuyNow(product.id)}
+                                        variant="contained"
+                                        sx={{ background: '#fb641b', '&:hover': { background: '#e45a12' } }}
+                                        startIcon={<Flash />}
+                                    >
+                                        Buy Now
+                                    </StyledButton>
+                                </ButtonContainer>
                             </ProductBox>
                         </Grid>
                     ))}
