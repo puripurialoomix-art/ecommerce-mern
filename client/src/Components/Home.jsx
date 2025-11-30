@@ -23,17 +23,20 @@ const ProductGrid = styled(Grid)`
     padding: 20px;
 `;
 
-const ProductBox = styled(Box)`
-    background: #fff;
-    padding: 15px;
-    transition: all 0.3s;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    &:hover {
-        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+const ProductBox = styled(Box)(({ theme }) => ({
+    background: '#fff',
+    padding: '10px',
+    transition: 'all 0.3s',
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+    '&:hover': {
+        boxShadow: '0 2px 8px rgba(0,0,0,0.15)'
+    },
+    [theme.breakpoints.down('sm')]: {
+        padding: '8px'
     }
-`;
+}));
 
 const ProductImageLink = styled(Link)`
     text-decoration: none;
@@ -41,66 +44,103 @@ const ProductImageLink = styled(Link)`
     text-align: center;
 `;
 
-const ProductImage = styled('img')`
-    width: auto;
-    height: 150px;
-    object-fit: contain;
-    margin: 0 auto;
-    display: block;
-`;
+const ProductImage = styled('img')(({ theme }) => ({
+    width: 'auto',
+    height: '150px',
+    objectFit: 'contain',
+    margin: '0 auto',
+    display: 'block',
+    [theme.breakpoints.down('sm')]: {
+        height: '120px'
+    }
+}));
 
-const ProductTitle = styled(Typography)`
-    font-size: 14px;
-    color: #212121;
-    margin-top: 10px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    min-height: 40px;
-`;
+const ProductTitle = styled(Typography)(({ theme }) => ({
+    fontSize: '14px',
+    color: '#212121',
+    marginTop: '10px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    display: '-webkit-box',
+    WebkitLineClamp: 2,
+    WebkitBoxOrient: 'vertical',
+    minHeight: '40px',
+    [theme.breakpoints.down('sm')]: {
+        fontSize: '12px',
+        minHeight: '32px',
+        marginTop: '5px'
+    }
+}));
 
-const PriceContainer = styled(Box)`
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-top: 10px;
-`;
+const PriceContainer = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    alignItems: 'center',
+    gap: '8px',
+    marginTop: '8px',
+    flexWrap: 'wrap',
+    [theme.breakpoints.down('sm')]: {
+        gap: '5px',
+        marginTop: '5px'
+    }
+}));
 
-const ProductPrice = styled(Typography)`
-    font-size: 18px;
-    font-weight: 600;
-    color: #212121;
-`;
+const ProductPrice = styled(Typography)(({ theme }) => ({
+    fontSize: '16px',
+    fontWeight: 600,
+    color: '#212121',
+    [theme.breakpoints.down('sm')]: {
+        fontSize: '14px'
+    }
+}));
 
-const OriginalPrice = styled(Typography)`
-    font-size: 14px;
-    color: #878787;
-    text-decoration: line-through;
-`;
+const OriginalPrice = styled(Typography)(({ theme }) => ({
+    fontSize: '13px',
+    color: '#878787',
+    textDecoration: 'line-through',
+    [theme.breakpoints.down('sm')]: {
+        fontSize: '11px'
+    }
+}));
 
-const ProductDiscount = styled(Typography)`
-    font-size: 14px;
-    color: #388e3c;
-    font-weight: 500;
-`;
+const ProductDiscount = styled(Typography)(({ theme }) => ({
+    fontSize: '13px',
+    color: '#388e3c',
+    fontWeight: 500,
+    [theme.breakpoints.down('sm')]: {
+        fontSize: '11px'
+    }
+}));
 
-const ButtonContainer = styled(Box)`
-    display: flex;
-    gap: 8px;
-    margin-top: auto;
-    padding-top: 15px;
-`;
+const ButtonContainer = styled(Box)(({ theme }) => ({
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '6px',
+    marginTop: 'auto',
+    paddingTop: '10px',
+    [theme.breakpoints.down('sm')]: {
+        gap: '5px',
+        paddingTop: '8px'
+    }
+}));
 
-const StyledButton = styled(Button)`
-    flex: 1;
-    border-radius: 2px;
-    height: 40px;
-    font-size: 13px;
-    text-transform: none;
-    font-weight: 500;
-`;
+const StyledButton = styled(Button)(({ theme }) => ({
+    width: '100%',
+    borderRadius: '2px',
+    height: '38px',
+    fontSize: '13px',
+    textTransform: 'none',
+    fontWeight: 500,
+    [theme.breakpoints.down('sm')]: {
+        height: '32px',
+        fontSize: '11px',
+        '& .MuiButton-startIcon': {
+            marginRight: '4px',
+            '& > svg': {
+                fontSize: '16px'
+            }
+        }
+    }
+}));
 
 const Home = () => {
     const getProducts = useSelector(state => state.getProducts);
