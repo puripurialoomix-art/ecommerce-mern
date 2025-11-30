@@ -14,35 +14,53 @@ const StyledHeader = styled(AppBar)`
     height: 55px;
 `;
 
-const Component = styled(Link)`
-    margin-left: 12%;
-    line-height: 0;
-    color: #FFFFFF;
-    text-decoration: none;
-`;
+const Component = styled(Link)(({ theme }) => ({
+    marginLeft: '12%',
+    lineHeight: 0,
+    color: '#FFFFFF',
+    textDecoration: 'none',
+    [theme.breakpoints.down('sm')]: {
+        marginLeft: '8px',
+        display: 'flex',
+        alignItems: 'center'
+    }
+}));
 
-const SubHeading = styled(Typography)`
-    font-size: 10px;
-    font-style: italic;
-`
+const SubHeading = styled(Typography)(({ theme }) => ({
+    fontSize: '10px',
+    fontStyle: 'italic',
+    [theme.breakpoints.down('sm')]: {
+        display: 'none'
+    }
+}));
 
-const PlusImage = styled('img')({
+const PlusImage = styled('img')(({ theme }) => ({
     width: 10,
     height: 10,
-    marginLeft: 4
-})
+    marginLeft: 4,
+    [theme.breakpoints.down('sm')]: {
+        display: 'none'
+    }
+}));
+
+const LogoImage = styled('img')(({ theme }) => ({
+    width: 75,
+    [theme.breakpoints.down('sm')]: {
+        width: 60
+    }
+}));
 
 const MenuButton = styled(IconButton)(({ theme }) => ({
     display: 'none',
     [theme.breakpoints.down('sm')]: {
-        display: 'block'
+        display: 'none'
     }
 }));
 
 const CustomButtonWrapper = styled('span')(({ theme }) => ({ 
     margin: '0 5% 0 auto', 
     [theme.breakpoints.down('sm')]: {
-        display: 'none'
+        margin: '0 8px 0 auto'
     }
 }));
 
@@ -86,14 +104,14 @@ const Header = () => {
                 </Drawer>
 
                 <Component to='/'>
-                    <img src={logoURL} style={{ width: 75 }} />
+                    <LogoImage src={logoURL} alt="Logo" />
                     <Box component="span" style={{ display: 'flex' }}>
                         <SubHeading>Explore&nbsp;
                             <Box component="span" style={{color:'#FFE500'}}>
                                 Plus
                             </Box>
                         </SubHeading>
-                        <PlusImage src={subURL} />
+                        <PlusImage src={subURL} alt="Plus" />
                     </Box>
                 </Component>
                 <Search />

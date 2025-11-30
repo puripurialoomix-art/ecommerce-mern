@@ -113,18 +113,17 @@ const ProductDiscount = styled(Typography)(({ theme }) => ({
 
 const ButtonContainer = styled(Box)(({ theme }) => ({
     display: 'flex',
-    flexDirection: 'column',
     gap: '6px',
     marginTop: 'auto',
     paddingTop: '10px',
     [theme.breakpoints.down('sm')]: {
-        gap: '5px',
+        gap: '4px',
         paddingTop: '8px'
     }
 }));
 
 const StyledButton = styled(Button)(({ theme }) => ({
-    width: '100%',
+    flex: 1,
     borderRadius: '2px',
     height: '38px',
     fontSize: '13px',
@@ -132,11 +131,14 @@ const StyledButton = styled(Button)(({ theme }) => ({
     fontWeight: 500,
     [theme.breakpoints.down('sm')]: {
         height: '32px',
-        fontSize: '11px',
+        fontSize: '10px',
+        padding: '4px 6px',
+        minWidth: 'auto',
         '& .MuiButton-startIcon': {
-            marginRight: '4px',
+            margin: 0,
+            marginRight: '2px',
             '& > svg': {
-                fontSize: '16px'
+                fontSize: '14px'
             }
         }
     }
