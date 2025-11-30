@@ -36,11 +36,9 @@ Connection(username, password)
   })
   .catch(err => console.log("❌ Database Connection Failed:", err));
 
-// ✅ Serve Frontend Build (VERY IMPORTANT)
-app.use(express.static(path.join(__dirname, "../client/build")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../client/build/index.html"));
+// ✅ Health check endpoint
+app.get("/", (req, res) => {
+  res.json({ message: "Backend API is running!", status: "success" });
 });
 
 // ✅ Start Server
