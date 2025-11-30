@@ -5,7 +5,6 @@ import { Box, styled } from '@mui/material';
 import NavBar from './Home/NarBar';
 import Banner from './Home/Banner';
 import MidSlide from './Home/MidSlide';
-import MidSection from './Home/MidSection';
 import Slide from './Home/Slide';
 
 import { useSelector, useDispatch } from 'react-redux'; // hooks
@@ -32,7 +31,6 @@ const Home = () => {
             <Component>
                 <Banner />
                 <MidSlide products={products} />
-                <MidSection />
                 <Slide
                     data={products} 
                     title='Discounts for You'
